@@ -54,7 +54,9 @@ android {
 dependencies {
 
     // App dependencies
+    implementation "com.google.code.gson:gson:$gsonVersion"
     implementation "com.google.android.gms:play-services-maps:$mapsVersion"
+    implementation "com.google.maps.android:android-maps-utils:$mapsUtilsVersion"
     implementation "androidx.constraintlayout:constraintlayout:$constraintVersion"
 
     // Architecture Components
