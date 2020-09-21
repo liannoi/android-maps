@@ -49,9 +49,11 @@ class MapsViewModel : ViewModel() {
         ///////////////////////////////////////////////////////////////////////////
 
         private fun notifyClient() {
-            val content = "${mapClient.measure().toInt()} (m.)"
-            Log.d(TAG, "MapClickNotificationHandler: $content")
-            _measuredEvent.value = Event(content)
+            val measure = "Measure: ${mapClient.measure().toInt()} (m.)"
+            Log.d(TAG, "notifyClient: content, $measure")
+            Log.d(TAG, "notifyClient: geoJSON, ${mapClient.geoJsonMarkers()}")
+            val log = "For GeoJSON, see the logs"
+            _measuredEvent.value = Event("$measure\n$log")
         }
     }
 

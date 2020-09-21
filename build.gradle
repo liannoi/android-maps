@@ -46,7 +46,9 @@ ext {
     compileSdkVersion = 30
 
     // App dependencies
+    gsonVersion = "2.8.6"
     mapsVersion = "17.0.0"
+    mapsUtilsVersion = "2.0.3"
     constraintVersion = "2.0.1"
 
     lifecycleVersion = "2.2.0"

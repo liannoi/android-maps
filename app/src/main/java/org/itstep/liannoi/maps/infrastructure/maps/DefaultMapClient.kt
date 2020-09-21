@@ -1,9 +1,9 @@
 package org.itstep.liannoi.maps.infrastructure.maps
 
-import android.annotation.SuppressLint
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.gson.Gson
 import org.itstep.liannoi.maps.R
 import org.itstep.liannoi.maps.application.common.maps.LocationProvider
 import org.itstep.liannoi.maps.application.common.maps.MapClient
@@ -16,6 +16,8 @@ class DefaultMapClient constructor(
 ) : MapClient {
 
     private lateinit var map: GoogleMap
+    private val gson: Gson = Gson()
+    private val markers: DefaultFeatureCollection = DefaultFeatureCollection()
 
     ///////////////////////////////////////////////////////////////////////////
     // Permissions
@@ -37,12 +39,15 @@ class DefaultMapClient constructor(
         }
     }
 
+    override fun geoJsonMarkers(): String = gson.toJson(markers)
+
     ///////////////////////////////////////////////////////////////////////////
     // Shapes
     ///////////////////////////////////////////////////////////////////////////
 
     override fun marker(latLng: LatLng) {
         map.addMarker(MarkerOptions().position(latLng))
+        markers.add(latLng)
     }
 
     override fun polyline(latest: List<LatLng>) {
@@ -95,8 +100,11 @@ class DefaultMapClient constructor(
         map.setOnMapClickListener { notification.onClick(it) }
     }
 
-    @SuppressLint("MissingPermission")
     private fun setup() {
-        map.isMyLocationEnabled = true
+        try {
+            map.isMyLocationEnabled = true
+        } catch (e: SecurityException) {
+            return
+        }
     }
 }
