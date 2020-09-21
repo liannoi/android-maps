@@ -1,6 +1,5 @@
 package org.itstep.liannoi.maps.infrastructure.maps
 
-import android.annotation.SuppressLint
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
@@ -101,8 +100,11 @@ class DefaultMapClient constructor(
         map.setOnMapClickListener { notification.onClick(it) }
     }
 
-    @SuppressLint("MissingPermission")
     private fun setup() {
-        map.isMyLocationEnabled = true
+        try {
+            map.isMyLocationEnabled = true
+        } catch (e: SecurityException) {
+            return
+        }
     }
 }
